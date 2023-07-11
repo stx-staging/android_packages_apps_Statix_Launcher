@@ -3,4 +3,5 @@
     <string name="local_colors_extraction_class" translatable="false">com.statix.launcher.ThemedLocalColorExtractor</string>
     <string name="app_filter_class" translatable="false">com.statix.launcher.hpapps.HiddenAppsFilter</string>
     <integer name="max_depth_blur_radius">75</integer>
+    <integer name="recentsThumbnailCacheSize">6</integer>
 </resources>
