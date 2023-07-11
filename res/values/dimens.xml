@@ -6,4 +6,26 @@
     <dimen name="all_apps_search_bar_bottom_padding">42dp</dimen>
     <dimen name="all_apps_header_top_margin">48dp</dimen>
     <dimen name="all_apps_predicted_icon_vertical_padding">16dp</dimen>
+
+    <!--  Overview Task Views  -->
+    <!--  The primary task thumbnail uses up to this much of the total screen height/width  -->
+    <item name="overview_max_scale" format="float" type="dimen">0.9</item>
+    <!--  A touch target for icons, sometimes slightly larger than the icons themselves  -->
+    <dimen name="task_thumbnail_icon_size">50dp</dimen>
+    <!--  The icon size for the focused task, placed in center of touch target  -->
+    <dimen name="task_thumbnail_icon_drawable_size">50dp</dimen>
+    <!--  The space under the focused task icon  -->
+    <dimen name="overview_task_margin">9dp</dimen>
+    <!--  The horizontal space between tasks  -->
+    <dimen name="overview_page_spacing">18dp</dimen>
+
+    <!-- Overrideable in overlay that provides the Overview Actions. -->
+    <dimen name="overview_actions_top_margin">0dp</dimen>
+    <dimen name="overview_actions_height">0dp</dimen>
+    <dimen name="overview_actions_button_spacing">0dp</dimen>
+
+    <!-- Total space (start + end) between the task card and the edge of the screen
+	 in various configurations -->
+    <dimen name="task_card_menu_option_vertical_padding">11dp</dimen>
+    <dimen name="task_card_menu_shadow_height">0dp</dimen>
 </resources>
