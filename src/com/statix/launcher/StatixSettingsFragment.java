@@ -28,14 +28,18 @@ public class StatixSettingsFragment extends LauncherSettingsFragment {
                 updateIsGoogleAppEnabled();
                 return true;
             case KEY_HP_APPS:
-                preference.setOnPreferenceClickListener(p -> {
-                    Utils.showSecurePrompt(getActivity(),
-                            getString(R.string.hp_apps_manager_name), () -> {
-                        Intent intent = new Intent(getActivity(), HpAppsActivity.class);
-                        startActivity(intent);
-                    });
-                    return true;
-                });
+                preference.setOnPreferenceClickListener(
+                        p -> {
+                            Utils.showSecurePrompt(
+                                    getActivity(),
+                                    getString(R.string.hp_apps_manager_name),
+                                    () -> {
+                                        Intent intent =
+                                                new Intent(getActivity(), HpAppsActivity.class);
+                                        startActivity(intent);
+                                    });
+                            return true;
+                        });
                 return true;
         }
 

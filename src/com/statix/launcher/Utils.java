@@ -20,7 +20,7 @@ public class Utils {
      * @param context The {@code Context} used to get {@code KeyguardManager} service
      * @param title the {@code String} which will be shown as the pompt title
      * @param successRunnable The {@code Runnable} which will be executed if the user does not setup
-     *                        device security or if lock screen is unlocked
+     *     device security or if lock screen is unlocked
      */
     public static void showSecurePrompt(Context context, String title, Runnable successRunnable) {
         if (hasSecureKeyguard(context)) {
@@ -28,31 +28,33 @@ public class Utils {
                     new BiometricPrompt.AuthenticationCallback() {
                         @Override
                         public void onAuthenticationSucceeded(
-                                    BiometricPrompt.AuthenticationResult result) {
+                                BiometricPrompt.AuthenticationResult result) {
                             successRunnable.run();
                         }
 
                         @Override
                         public void onAuthenticationError(int errorCode, CharSequence errString) {
-                            //Do nothing
+                            // Do nothing
                         }
-            };
+                    };
 
-            final BiometricPrompt bp = new BiometricPrompt.Builder(context)
-                    .setTitle(title)
-                    .setAllowedAuthenticators(Authenticators.BIOMETRIC_STRONG |
-                                              Authenticators.DEVICE_CREDENTIAL)
-                    .build();
+            final BiometricPrompt bp =
+                    new BiometricPrompt.Builder(context)
+                            .setTitle(title)
+                            .setAllowedAuthenticators(
+                                    Authenticators.BIOMETRIC_STRONG
+                                            | Authenticators.DEVICE_CREDENTIAL)
+                            .build();
 
             final Handler handler = new Handler(Looper.getMainLooper());
-            bp.authenticate(new CancellationSignal(),
+            bp.authenticate(
+                    new CancellationSignal(),
                     runnable -> handler.post(runnable),
                     authenticationCallback);
         } else {
             // Notify the user a secure keyguard is required for protected apps,
             // but allow to set hidden apps
-            Toast.makeText(context, R.string.hp_apps_no_lock_error, Toast.LENGTH_LONG)
-                .show();
+            Toast.makeText(context, R.string.hp_apps_no_lock_error, Toast.LENGTH_LONG).show();
             successRunnable.run();
         }
     }
@@ -61,5 +63,4 @@ public class Utils {
         final KeyguardManager keyguardManager = context.getSystemService(KeyguardManager.class);
         return keyguardManager != null && keyguardManager.isKeyguardSecure();
     }
-
 }

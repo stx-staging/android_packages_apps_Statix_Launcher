@@ -20,7 +20,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 
@@ -32,16 +31,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class LoadHpComponentsTask extends AsyncTask<Void, Integer, List<HpComponent>> {
-    @NonNull
-    private HpDatabaseHelper mDbHelper;
+    @NonNull private HpDatabaseHelper mDbHelper;
 
-    @NonNull
-    private PackageManager mPackageManager;
+    @NonNull private PackageManager mPackageManager;
 
-    @NonNull
-    private Callback mCallback;
+    @NonNull private Callback mCallback;
 
-    LoadHpComponentsTask(@NonNull HpDatabaseHelper dbHelper,
+    LoadHpComponentsTask(
+            @NonNull HpDatabaseHelper dbHelper,
             @NonNull PackageManager packageManager,
             @NonNull Callback callback) {
         mDbHelper = dbHelper;
@@ -56,17 +53,20 @@ public class LoadHpComponentsTask extends AsyncTask<Void, Integer, List<HpCompon
         Intent filter = new Intent(Intent.ACTION_MAIN, null);
         filter.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        List<ResolveInfo> apps = mPackageManager.queryIntentActivities(filter,
-                PackageManager.GET_META_DATA);
+        List<ResolveInfo> apps =
+                mPackageManager.queryIntentActivities(filter, PackageManager.GET_META_DATA);
 
         int numPackages = apps.size();
         for (int i = 0; i < numPackages; i++) {
             ResolveInfo app = apps.get(i);
             try {
                 String pkgName = app.activityInfo.packageName;
-                String label = mPackageManager.getApplicationLabel(
-                        mPackageManager.getApplicationInfo(pkgName,
-                                PackageManager.GET_META_DATA)).toString();
+                String label =
+                        mPackageManager
+                                .getApplicationLabel(
+                                        mPackageManager.getApplicationInfo(
+                                                pkgName, PackageManager.GET_META_DATA))
+                                .toString();
                 Drawable icon = app.loadIcon(mPackageManager);
                 boolean isHidden = mDbHelper.isPackageHidden(pkgName);
                 boolean isProtected = mDbHelper.isPackageProtected(pkgName);
@@ -96,6 +96,7 @@ public class LoadHpComponentsTask extends AsyncTask<Void, Integer, List<HpCompon
 
     interface Callback {
         void onLoadListProgress(int progress);
+
         void onLoadCompleted(List<HpComponent> result);
     }
 }

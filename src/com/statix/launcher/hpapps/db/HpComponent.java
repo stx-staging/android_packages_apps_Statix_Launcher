@@ -16,21 +16,23 @@
 package com.statix.launcher.hpapps.db;
 
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.NonNull;
 
 public class HpComponent {
-    @NonNull
-    private final String mPackageName;
-    @NonNull
-    private final Drawable mIcon;
-    @NonNull
-    private final String mLabel;
+    @NonNull private final String mPackageName;
+    @NonNull private final Drawable mIcon;
+    @NonNull private final String mLabel;
 
     private boolean mIsHidden;
     private boolean mIsProtected;
 
-    public HpComponent(@NonNull String packageName, @NonNull Drawable icon,
-                          @NonNull String label, boolean isHidden, boolean isProtected) {
+    public HpComponent(
+            @NonNull String packageName,
+            @NonNull Drawable icon,
+            @NonNull String label,
+            boolean isHidden,
+            boolean isProtected) {
         mPackageName = packageName;
         mIcon = icon;
         mLabel = label;
@@ -76,8 +78,8 @@ public class HpComponent {
         }
 
         HpComponent otherComponent = (HpComponent) other;
-        return otherComponent.getPackageName().equals(mPackageName) &&
-                otherComponent.isHidden() == mIsHidden;
+        return otherComponent.getPackageName().equals(mPackageName)
+                && otherComponent.isHidden() == mIsHidden;
     }
 
     @Override

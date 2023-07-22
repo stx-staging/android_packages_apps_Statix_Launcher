@@ -34,8 +34,7 @@ public class HpDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_HIDDEN = "hidden";
     private static final String KEY_PROTECTED = "protected";
 
-    @Nullable
-    private static HpDatabaseHelper sSingleton;
+    @Nullable private static HpDatabaseHelper sSingleton;
 
     private HpDatabaseHelper(@NonNull Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,19 +50,24 @@ public class HpDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CMD_CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
-                "(" +
-                KEY_UID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                KEY_PKGNAME + " TEXT," +
-                KEY_HIDDEN + " INTEGER DEFAULT 0," +
-                KEY_PROTECTED + " INTEGER DEFAULT 0" +
-                ")";
+        String CMD_CREATE_TABLE =
+                "CREATE TABLE "
+                        + TABLE_NAME
+                        + "("
+                        + KEY_UID
+                        + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                        + KEY_PKGNAME
+                        + " TEXT,"
+                        + KEY_HIDDEN
+                        + " INTEGER DEFAULT 0,"
+                        + KEY_PROTECTED
+                        + " INTEGER DEFAULT 0"
+                        + ")";
         db.execSQL(CMD_CREATE_TABLE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
     public void addHiddenApp(@NonNull String packageName) {
         if (isPackageHidden(packageName)) {
@@ -78,8 +82,8 @@ public class HpDatabaseHelper extends SQLiteOpenHelper {
             values.put(KEY_PKGNAME, packageName);
             values.put(KEY_HIDDEN, 1);
 
-            int rows = db.update(TABLE_NAME, values, KEY_PKGNAME + " = ?",
-                    new String[]{KEY_PKGNAME});
+            int rows =
+                    db.update(TABLE_NAME, values, KEY_PKGNAME + " = ?", new String[] {KEY_PKGNAME});
             if (rows != 1) {
                 // Entry doesn't exist, create a new one
                 db.insertOrThrow(TABLE_NAME, null, values);
@@ -105,8 +109,8 @@ public class HpDatabaseHelper extends SQLiteOpenHelper {
             values.put(KEY_PKGNAME, packageName);
             values.put(KEY_PROTECTED, 1);
 
-            int rows = db.update(TABLE_NAME, values, KEY_PKGNAME + " = ?",
-                    new String[]{KEY_PKGNAME});
+            int rows =
+                    db.update(TABLE_NAME, values, KEY_PKGNAME + " = ?", new String[] {KEY_PKGNAME});
             if (rows != 1) {
                 // Entry doesn't exist, create a new one
                 db.insertOrThrow(TABLE_NAME, null, values);
@@ -118,7 +122,6 @@ public class HpDatabaseHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
     }
-
 
     public void removeHiddenApp(@NonNull String packageName) {
         if (!isPackageHidden(packageName)) {
@@ -132,7 +135,7 @@ public class HpDatabaseHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(KEY_HIDDEN, 0);
 
-            db.update(TABLE_NAME, values, KEY_PKGNAME + " = ?", new String[]{packageName});
+            db.update(TABLE_NAME, values, KEY_PKGNAME + " = ?", new String[] {packageName});
             db.setTransactionSuccessful();
         } catch (Exception e) {
             // Ignored
@@ -153,7 +156,7 @@ public class HpDatabaseHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(KEY_PROTECTED, 0);
 
-            db.update(TABLE_NAME, values, KEY_PKGNAME + " = ?", new String[]{packageName});
+            db.update(TABLE_NAME, values, KEY_PKGNAME + " = ?", new String[] {packageName});
             db.setTransactionSuccessful();
         } catch (Exception e) {
             // Ignored
@@ -163,10 +166,12 @@ public class HpDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean isPackageHidden(@NonNull String packageName) {
-        String query = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ?", TABLE_NAME,
-                KEY_PKGNAME, KEY_HIDDEN);
+        String query =
+                String.format(
+                        "SELECT * FROM %s WHERE %s = ? AND %s = ?",
+                        TABLE_NAME, KEY_PKGNAME, KEY_HIDDEN);
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, new String[]{packageName, String.valueOf(1)});
+        Cursor cursor = db.rawQuery(query, new String[] {packageName, String.valueOf(1)});
         boolean result = false;
         try {
             result = cursor.getCount() != 0;
@@ -182,10 +187,12 @@ public class HpDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean isPackageProtected(@NonNull String packageName) {
-        String query = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ?", TABLE_NAME,
-                KEY_PKGNAME, KEY_PROTECTED);
+        String query =
+                String.format(
+                        "SELECT * FROM %s WHERE %s = ? AND %s = ?",
+                        TABLE_NAME, KEY_PKGNAME, KEY_PROTECTED);
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, new String[]{packageName, String.valueOf(1)});
+        Cursor cursor = db.rawQuery(query, new String[] {packageName, String.valueOf(1)});
         boolean result = false;
         try {
             result = cursor.getCount() != 0;

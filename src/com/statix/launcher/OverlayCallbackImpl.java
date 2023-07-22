@@ -39,8 +39,10 @@ import java.io.PrintWriter;
  * Launcher}.
  */
 public class OverlayCallbackImpl
-        implements LauncherOverlay, LauncherClientCallbacks, LauncherOverlayManager,
-        OnSharedPreferenceChangeListener {
+        implements LauncherOverlay,
+                LauncherClientCallbacks,
+                LauncherOverlayManager,
+                OnSharedPreferenceChangeListener {
 
     public static final String KEY_ENABLE_MINUS_ONE = "pref_enable_minus_one";
 
@@ -124,7 +126,7 @@ public class OverlayCallbackImpl
     }
 
     @Override
-    public void onActivitySaveInstanceState(Activity activity, Bundle bundle) { }
+    public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {}
 
     @Override
     public void onActivityDestroyed(Activity activity) {
@@ -174,12 +176,10 @@ public class OverlayCallbackImpl
         mLauncherOverlayCallbacks = callbacks;
     }
 
-
     private LauncherClient.ClientOptions getClientOptions(SharedPreferences prefs) {
         return new LauncherClient.ClientOptions(
                 prefs.getBoolean(KEY_ENABLE_MINUS_ONE, true),
                 true, /* enableHotword */
-                true /* enablePrewarming */
-        );
+                true /* enablePrewarming */);
     }
 }

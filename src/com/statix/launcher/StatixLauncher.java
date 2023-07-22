@@ -35,9 +35,12 @@ public class StatixLauncher extends QuickstepLauncher {
     }
 
     private void startActivitySafelyAuth(View v, Intent intent, ItemInfo item) {
-        Utils.showSecurePrompt(this, getString(R.string.hp_apps_unlock, item.title), () -> {
-            super.startActivitySafely(v, intent, item);
-        });
+        Utils.showSecurePrompt(
+                this,
+                getString(R.string.hp_apps_unlock, item.title),
+                () -> {
+                    super.startActivitySafely(v, intent, item);
+                });
     }
 
     @Override

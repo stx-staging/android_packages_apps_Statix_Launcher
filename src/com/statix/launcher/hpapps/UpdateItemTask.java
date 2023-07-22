@@ -23,14 +23,12 @@ import com.statix.launcher.hpapps.db.HpComponent;
 import com.statix.launcher.hpapps.db.HpDatabaseHelper;
 
 public class UpdateItemTask extends AsyncTask<HpComponent, Void, Boolean> {
-    @NonNull
-    private HpDatabaseHelper mDbHelper;
-    @NonNull
-    private UpdateCallback mCallback;
-    @NonNull
-    private HpComponent.Kind mKind;
+    @NonNull private HpDatabaseHelper mDbHelper;
+    @NonNull private UpdateCallback mCallback;
+    @NonNull private HpComponent.Kind mKind;
 
-    UpdateItemTask(@NonNull HpDatabaseHelper dbHelper,
+    UpdateItemTask(
+            @NonNull HpDatabaseHelper dbHelper,
             @NonNull UpdateCallback callback,
             @NonNull HpComponent.Kind kind) {
         mDbHelper = dbHelper;

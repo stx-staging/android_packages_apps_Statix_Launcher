@@ -16,7 +16,6 @@
 
 package com.statix.launcher;
 
-import android.annotation.ColorInt;
 import android.app.WallpaperColors;
 import android.app.WallpaperManager;
 import android.content.Context;
@@ -30,22 +29,19 @@ import android.widget.RemoteViews;
 
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.Launcher;
-import com.android.launcher3.Utilities;
 import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.widget.LocalColorExtractor;
-
 import com.android.systemui.monet.ColorScheme;
 import com.android.systemui.monet.Style;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ThemedLocalColorExtractor extends LocalColorExtractor implements
-        WallpaperManager.LocalWallpaperColorConsumer {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ThemedLocalColorExtractor extends LocalColorExtractor
+        implements WallpaperManager.LocalWallpaperColorConsumer {
 
     private static final String KEY_COLOR_SOURCE = "android.theme.customization.color_source";
 
@@ -136,8 +132,10 @@ public class ThemedLocalColorExtractor extends LocalColorExtractor implements
         mContext = context;
         wallpaperManager = (WallpaperManager) context.getSystemService(Context.WALLPAPER_SERVICE);
         try {
-            String json = Settings.Secure.getString(context.getContentResolver(),
-                    Settings.Secure.THEME_CUSTOMIZATION_OVERLAY_PACKAGES);
+            String json =
+                    Settings.Secure.getString(
+                            context.getContentResolver(),
+                            Settings.Secure.THEME_CUSTOMIZATION_OVERLAY_PACKAGES);
             if (json != null && !json.isEmpty()) {
                 JSONObject packages = new JSONObject(json);
                 applyOverlay = !"preset".equals(packages.getString(KEY_COLOR_SOURCE));
@@ -147,8 +145,8 @@ public class ThemedLocalColorExtractor extends LocalColorExtractor implements
         }
     }
 
-    private static void addColorsToArray(List<Integer> colors,
-            List<Integer> resMap, SparseIntArray array) {
+    private static void addColorsToArray(
+            List<Integer> colors, List<Integer> resMap, SparseIntArray array) {
         for (int i = 0; i < colors.size(); i++) {
             int shade = colors.get(i);
             int resId = resMap.get(i);
@@ -167,8 +165,10 @@ public class ThemedLocalColorExtractor extends LocalColorExtractor implements
             return null;
         }
         SparseIntArray colorRes = new SparseIntArray(5 * 12);
-        boolean darkMode = (mContext.getResources().getConfiguration().uiMode
-                & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+        boolean darkMode =
+                (mContext.getResources().getConfiguration().uiMode
+                                & Configuration.UI_MODE_NIGHT_MASK)
+                        == Configuration.UI_MODE_NIGHT_YES;
         ColorScheme colorScheme = new ColorScheme(colors, darkMode, Style.VIBRANT);
         addColorsToArray(colorScheme.getAccent1().getAllShades(), ACCENT1_RES, colorRes);
         addColorsToArray(colorScheme.getAccent2().getAllShades(), ACCENT2_RES, colorRes);
@@ -180,7 +180,8 @@ public class ThemedLocalColorExtractor extends LocalColorExtractor implements
 
     @Override
     public void setWorkspaceLocation(Rect pos, View child, int screenId) {
-        ActivityContext activityContext = (ActivityContext) ActivityContext.lookupContext(child.getContext());
+        ActivityContext activityContext =
+                (ActivityContext) ActivityContext.lookupContext(child.getContext());
         if (!(activityContext instanceof Launcher)) {
             tempRectF.setEmpty();
             return;
@@ -213,7 +214,8 @@ public class ThemedLocalColorExtractor extends LocalColorExtractor implements
 
         if (wallpaperManager != null && !tempRectF.isEmpty()) {
             wallpaperManager.removeOnColorsChangedListener(this);
-            wallpaperManager.addOnColorsChangedListener(this, new ArrayList<RectF>(List.of(tempRectF)));
+            wallpaperManager.addOnColorsChangedListener(
+                    this, new ArrayList<RectF>(List.of(tempRectF)));
         }
     }
 

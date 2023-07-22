@@ -25,8 +25,7 @@ public class StatixWorkspaceTouchListener extends WorkspaceTouchListener {
 
     @Override
     public boolean onDoubleTap(MotionEvent event) {
-        if (isDoubleTapEnabled())
-            mPowerManager.goToSleep(event.getEventTime());
+        if (isDoubleTapEnabled()) mPowerManager.goToSleep(event.getEventTime());
         return true;
     }
 
@@ -34,5 +33,4 @@ public class StatixWorkspaceTouchListener extends WorkspaceTouchListener {
         SharedPreferences preferences = LauncherPrefs.getPrefs(mContext.getApplicationContext());
         return preferences.getBoolean(KEY_DT_GESTURE, true);
     }
-
 }

@@ -29,7 +29,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,10 +46,10 @@ import com.statix.launcher.hpapps.db.HpDatabaseHelper;
 
 import java.util.List;
 
-public class HpAppsActivity extends Activity implements
-        HpAppsAdapter.Listener,
-        LoadHpComponentsTask.Callback,
-        UpdateItemTask.UpdateCallback {
+public class HpAppsActivity extends Activity
+        implements HpAppsAdapter.Listener,
+                LoadHpComponentsTask.Callback,
+                UpdateItemTask.UpdateCallback {
 
     private static final String KEY_TRUST_ONBOARDING = "pref_trust_onboarding";
 
@@ -146,9 +145,7 @@ public class HpAppsActivity extends Activity implements
             return;
         }
 
-        preferenceManager.edit()
-                .putBoolean(KEY_TRUST_ONBOARDING, true)
-                .apply();
+        preferenceManager.edit().putBoolean(KEY_TRUST_ONBOARDING, true).apply();
 
         new AlertDialog.Builder(this)
                 .setView(R.layout.dialog_hp_info)
