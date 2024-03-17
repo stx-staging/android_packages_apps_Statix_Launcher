@@ -33,6 +33,8 @@ android_app {
     ],
 
     static_libs: [
+        "com_android_launcher3_flags_lib",
+        "com_android_wm_shell_flags_lib",
         "launcher-testing-shared",
         "QuickstepResLib",
         "libGoogleFeed",
